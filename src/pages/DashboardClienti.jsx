@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getClients } from '../services/db';
+import ClientCard from '../components/ClientCard';
 
 const DashboardClienti = () => {
   const [clients, setClients] = useState([]);
@@ -28,10 +29,12 @@ const DashboardClienti = () => {
       <button className="bg-blue-500 text-white px-4 py-2 rounded mb-4">Aggiungi Cliente</button>
       <div className="grid gap-4">
         {clients.map(client => (
-          <div key={client.id} className="border p-4 rounded shadow">
-            <h2 className="text-xl">{client.name || 'Senza Nome'}</h2>
-            <p>{client.email || 'Senza Email'}</p>
-          </div>
+          <ClientCard
+            key={client.id}
+            client={client}
+            onEdit={() => {}}
+            onDelete={() => {}}
+          />
         ))}
       </div>
     </div>
