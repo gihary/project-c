@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getClients } from '../services/db';
+import { getClients, deleteClient } from '../services/db';
 import ClientCard from '../components/ClientCard';
 
 const DashboardClienti = () => {
@@ -21,6 +21,15 @@ const DashboardClienti = () => {
     fetchClients();
   }, []);
 
+  const handleDeleteClient = async (clientId) => {
+    try {
+      await deleteClient(clientId);
+      setClients(prevClients => prevClients.filter(client => client.id !== clientId));
+    } catch (error) {
+      console.error('Errore nell\'eliminare il cliente:', error);
+    }
+  };
+
   if (loading) return <div>Caricamento clienti...</div>;
 
   return (
@@ -33,7 +42,7 @@ const DashboardClienti = () => {
             key={client.id}
             client={client}
             onEdit={() => {}}
-            onDelete={() => {}}
+            onDelete={handleDeleteClient}
           />
         ))}
       </div>
